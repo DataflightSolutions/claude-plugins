@@ -1,6 +1,6 @@
 {
-  "name": "DataflightSolutions-claude-plugins",
-  "displayName": "DataFlight Solutions Claude Plugins",
+  "name": "dataflight-claude-plugins",
+  "displayName": "DataFlight Claude Plugins",
   "description": "Official Claude Code plugins for DataFlight workflows",
   "version": "1.0.0",
   "author": {
