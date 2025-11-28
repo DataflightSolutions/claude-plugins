@@ -11,8 +11,7 @@ This plugin streamlines your Graphite workflow by automating the repetitive step
 - **One-shot workflows**: Create diffs and submit PRs with a single command
 - **Smart commit messages**: AI-generated messages following your repo's style and stacked diff conventions
 - **Automatic staging**: Handles unstaged changes with `--all` flag
-- **CLI-first approach**: Uses `gt` CLI by default, falls back to Graphite MCP when needed
-- **Configurable behavior**: Control commit style, auto-submit, and tool preferences
+- **Zero configuration**: Works out of the box with sensible defaults
 
 ## Commands
 
@@ -49,53 +48,6 @@ Create a stacked diff AND submit as PR in one step.
 
 - **Graphite CLI**: Install with `npm install -g @withgraphite/graphite-cli@latest`
 - **Git repository**: Must be in a git repo with Graphite initialized
-- **Configuration file** (optional): Customize behavior with `.claude/gt-workflow.local.md` (see below)
-
-## Configuration (Optional)
-
-The plugin works out-of-the-box with sensible defaults. Optionally customize behavior by creating `.claude/gt-workflow.local.md` in your project root:
-
-```markdown
----
-commit_style: conventional  # Default
-auto_submit: always         # Default
-dry_run: false              # Default
-tool_preference: cli        # Default
----
-
-# Graphite Workflow Settings
-
-This file configures the gt-workflow plugin for this project.
-```
-
-**If no settings file exists, the plugin uses the defaults shown above.**
-
-### Settings Reference
-
-| Setting | Options | Default | Description |
-|---------|---------|---------|-------------|
-| `commit_style` | `conventional`, `freeform` | `conventional` | Commit message format style |
-| `auto_submit` | `always`, `prompt`, `never` | `always` | Whether `/gt-create-submit` auto-submits |
-| `dry_run` | `true`, `false` | `false` | Preview commands before executing |
-| `tool_preference` | `cli`, `mcp`, `auto` | `cli` | Prefer gt CLI or Graphite MCP tools |
-
-**Note**: Settings are optional. If no settings file exists, defaults are used automatically.
-
-## Installation
-
-### Local Installation
-
-```bash
-# Plugin is already in ~/.claude/plugins/gt-workflow/
-# Enable it in Claude Code settings or use:
-cc --plugin-dir ~/.claude/plugins/gt-workflow
-```
-
-### Project-Specific Setup
-
-1. Copy plugin to project: `cp -r ~/.claude/plugins/gt-workflow .claude-plugin/`
-2. Create settings file: `.claude/gt-workflow.local.md`
-3. Restart Claude Code
 
 ## Usage Examples
 
@@ -130,9 +82,6 @@ Install Graphite CLI:
 npm install -g @withgraphite/graphite-cli@latest
 ```
 
-### "Settings file not found"
-Create `.claude/gt-workflow.local.md` in your project root (see Configuration section above).
-
 ### "Not in a git repository"
 Navigate to a git repository before running commands.
 
@@ -143,18 +92,17 @@ Make some changes first, or check `git status` to see current state.
 
 The plugin intelligently handles your workflow:
 
-1. **Detects tool availability**: Checks for `gt` CLI or Graphite MCP
-2. **Reads your settings**: Loads preferences from `.claude/gt-workflow.local.md`
-3. **Analyzes changes**: Reviews git diff and commit history
-4. **Generates commit message**: AI creates message following your repo's style
-5. **Creates diff**: Runs `gt create --all` with generated message
-6. **Submits PR** (if requested): Runs `gt submit` for current branch
+1. **Detects tool availability**: Checks for `gt` CLI
+2. **Analyzes changes**: Reviews git diff and commit history
+3. **Generates commit message**: AI creates message following your repo's style
+4. **Creates diff**: Runs `gt create --all` with generated message
+5. **Submits PR** (if requested): Runs `gt submit` for current branch
 
 ## Development
 
 - **Version**: 0.1.0
-- **Components**: 3 commands, 3 helper scripts
-- **Dependencies**: Graphite CLI (`gt`), optional Graphite MCP
+- **Components**: 6 commands (3 primary + 3 aliases)
+- **Dependencies**: Graphite CLI (`gt`)
 
 ## License
 
