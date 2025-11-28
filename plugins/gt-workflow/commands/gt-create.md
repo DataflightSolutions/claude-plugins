@@ -5,92 +5,138 @@ allowed-tools: Bash(gt:*), Bash(git:*)
 
 # Create Graphite Stacked Diff
 
-Create a new stacked diff from current changes with an AI-generated commit message.
+Create a stacked diff (commit + branch) from current changes using the Graphite CLI.
 
-## Steps
+## Stacked Diff Philosophy
 
-1. **Validate environment**:
-   - Check if in a git repository (run `git rev-parse --is-inside-work-tree`)
-   - Check if gt CLI is available (run `gt --version`)
-   - If gt not found, show error: "Graphite CLI not found. Install with: `npm install -g @withgraphite/graphite-cli@latest`"
+Each diff in a stack should represent exactly one logical change. This makes code review easier and allows changes to land independently. When generating commit messages, think about what single thing this diff accomplishes.
 
-2. **Check for changes**:
-   - Run `git status --short` to check for changes
-   - If no changes, show: "No changes to commit. Make some changes first." and exit
-   - Run `git diff --stat` to get summary (files changed, insertions, deletions)
+Good examples of atomic changes:
+- Add a new function or component
+- Fix a specific bug
+- Refactor a single module
+- Update configuration for one purpose
 
-3. **Analyze changes**:
-   - Run `git diff --staged` and `git diff` to get all changes (staged + unstaged)
-   - Run `git log -5 --oneline` to see recent commit message style
+Avoid combining unrelated changes in a single diff.
 
-4. **Generate commit message**:
-   - Analyze the diff to understand what changed
-   - Use conventional commit format: `type(scope): description`
-   - Determine type (feat/fix/refactor/docs/test/chore) from changes
-   - Follow stacked diff conventions (concise, focused on single logical change)
-   - Match existing commit style from git log
-   - Keep message concise (50-72 char subject line)
-   - Add body if needed for complex changes
-   - Add footer:
-     ```
+## Execution Steps
 
-     🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Execute these steps in order. Stop and report errors if any step fails.
 
-     Co-Authored-By: Claude Code
-     ```
+### Step 1: Validate Environment
 
-5. **Create diff**:
-   - Run `gt create --all -m "<commit_message>"` via Bash tool
-   - The `--all` flag stages all changes automatically
-   - Capture output
+Run both commands to verify the environment is ready:
 
-6. **Show summary**:
-   - Display commit message used
-   - Show summary: "{X} files changed, {Y} insertions(+), {Z} deletions(-)"
-   - Show branch name created/updated
-   - Show: "✅ Diff created successfully"
-
-## Commit Message Example
-
+```bash
+git rev-parse --is-inside-work-tree
 ```
-feat(auth): add JWT token validation
 
-Implement middleware to validate JWT tokens on protected routes.
-Includes error handling for expired and malformed tokens.
+If this fails, tell the user: "Not in a git repository. Navigate to a git repo first."
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```bash
+gt --version
+```
+
+If this fails, tell the user: "Graphite CLI not found. Install with: npm install -g @withgraphite/graphite-cli@latest"
+
+### Step 2: Check for Changes
+
+```bash
+git status --short
+```
+
+If output is empty, tell the user: "No changes to commit." and stop.
+
+```bash
+git diff --stat
+```
+
+Note the files changed count and line changes for the summary.
+
+### Step 3: Analyze Changes for Commit Message
+
+Run these commands to understand what changed:
+
+```bash
+git diff
+git diff --staged
+```
+
+Also check recent commit style:
+
+```bash
+git log -5 --oneline
+```
+
+### Step 4: Generate Commit Message
+
+Based on the diff analysis, write a commit message following these rules:
+
+**Subject line (first line):**
+- Use conventional commit format: `type(scope): description`
+- Types: feat, fix, refactor, docs, test, chore, perf, style, build, ci
+- Scope is optional but helpful (module name, component, file area)
+- Keep under 72 characters
+- Use imperative mood ("add feature" not "added feature")
+- No period at the end
+
+**Body (optional, separated by blank line):**
+- Explain what and why, not how (the diff shows how)
+- Wrap at 72 characters
+- Only include if the subject line needs clarification
+
+**Footer (required):**
+```
+Co-Authored-By: Claude Code
+```
+
+**Example commit message:**
+```
+fix(auth): handle expired JWT tokens gracefully
+
+Return 401 with clear error message instead of 500 when token
+validation fails due to expiration.
 
 Co-Authored-By: Claude Code
+```
+
+### Step 5: Create the Diff
+
+Run the gt create command with the generated message:
+
+```bash
+gt create --all -m "<commit_message>"
+```
+
+The `--all` flag stages all changes automatically. Pass the full commit message including the footer.
+
+### Step 6: Report Results
+
+After successful creation, report to the user:
+- The commit message that was used
+- Number of files changed
+- Lines added/removed
+- The branch name created by gt
+
+Example output format:
+```
+Diff created on branch: feature/auth-token-handling
+
+Commit: fix(auth): handle expired JWT tokens gracefully
+
+Changes: 3 files, +45 -12
 ```
 
 ## Error Handling
 
-- **Not in git repo**: "Error: Not in a git repository. Navigate to a git repo first."
-- **No changes**: "No changes to commit. Make some changes first."
-- **gt not installed**: "Error: Graphite CLI not found. Install with: `npm install -g @withgraphite/graphite-cli@latest`"
-- **gt command fails**: Show gt error output with troubleshooting tip
+If `gt create` fails:
+- Show the exact error output from gt
+- Common issues: not on a valid base branch, merge conflicts, gt not initialized
+- Suggest running `gt init` if the repo hasn't been set up with Graphite
 
-## Example Output
+## Important Notes
 
-```
-📝 Commit message:
-feat(pipeline): add flat list view for pipeline results
-
-Implemented new PipelineFlatList component with tag-based display
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude Code
-
-📊 Summary: 4 files changed, 127 insertions(+), 3 deletions(-)
-
-✅ Diff created successfully
-Branch: feature/pipeline-flat-list
-```
-
-## Tips
-
-- The `--all` flag automatically stages unstaged changes
-- Each diff should represent one logical change for easier review
-- Stack multiple diffs by running this command multiple times
-- Use `/gt-submit` separately to control when PRs are opened
+- Each invocation creates one diff in the stack
+- The branch name is auto-generated by gt based on the commit message
+- Use `/gt-submit` when ready to open a PR for this diff
+- Multiple diffs can be stacked by running this command multiple times
