@@ -1,0 +1,10 @@
+{
+  "name": "gt-workflow",
+  "version": "0.1.0",
+  "description": "Automate Graphite (gt) stacked-PR workflow with one-shot commands for creating diffs and submitting PRs",
+  "author": {
+    "name": "Szymon",
+    "email": "user@example.com"
+  },
+  "keywords": ["graphite", "git", "stacked-diffs", "pull-requests", "workflow"]
+}
