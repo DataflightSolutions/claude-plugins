@@ -1,0 +1,23 @@
+{
+  "name": "dataflight-claude-plugins",
+  "displayName": "DataFlight Claude Plugins",
+  "description": "Official Claude Code plugins for DataFlight workflows",
+  "version": "1.0.0",
+  "author": {
+    "name": "DataFlight",
+    "url": "https://github.com/DataflightSolutions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DataflightSolutions/claude-plugins"
+  },
+  "plugins": [
+    {
+      "name": "gt-workflow",
+      "path": "plugins/gt-workflow",
+      "version": "0.1.0",
+      "description": "Automate Graphite (gt) stacked-PR workflow with one-shot commands",
+      "keywords": ["graphite", "git", "stacked-diffs", "pull-requests", "workflow"]
+    }
+  ]
+}
