@@ -102,7 +102,7 @@ async function loadStorageState(browser, statePath, options = {}) {
  * @returns {Promise<Array>} Array of detected server URLs
  */
 async function detectDevServers(customPorts = []) {
-  const commonPorts = [3000, 3002, 5173, 5174, 8080, 8000, 4200, 5000, 9000, 1234, 4321, 3333];
+  const commonPorts = [3000, 3001, 3002, 5173, 5174, 8080, 8000, 4200, 5000, 9000, 1234, 4321, 3333];
   const allPorts = [...new Set([...commonPorts, ...customPorts])];
 
   const detectedServers = [];
