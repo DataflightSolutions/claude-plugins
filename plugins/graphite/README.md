@@ -20,7 +20,7 @@ The commands in this plugin follow stacked diff best practices:
 
 Create a new stacked diff from current changes without submitting a PR.
 
-**Alias**: `/gt:create`
+**Alias**: `/graphite:gt-create`
 
 **What it does**:
 1. Validates git repository and gt CLI availability
@@ -34,7 +34,7 @@ Create a new stacked diff from current changes without submitting a PR.
 
 Submit the current branch as a pull request.
 
-**Alias**: `/gt:submit`
+**Alias**: `/graphite:gt-submit`
 
 **What it does**:
 1. Validates environment
@@ -46,7 +46,7 @@ Submit the current branch as a pull request.
 
 Create a diff and submit it as a PR in one step.
 
-**Alias**: `/gt:create-submit`
+**Alias**: `/graphite:gt-create-submit`
 
 **What it does**:
 1. Everything from `/graphite:create`
@@ -144,7 +144,7 @@ The branch was created outside of gt. Use `gt create` to create Graphite-tracked
 ## Development
 
 - **Version**: 1.0.0
-- **Commands**: 3 primary (+ 3 aliases via gt plugin)
+- **Commands**: 3 primary + 3 aliases (gt-create, gt-submit, gt-create-submit)
 - **Dependencies**: Graphite CLI
 
 ## License

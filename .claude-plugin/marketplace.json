@@ -20,15 +20,8 @@
       "name": "graphite",
       "source": "./plugins/graphite",
       "version": "1.0.0",
-      "description": "Automate Graphite stacked-PR workflow with commands for creating diffs and submitting PRs",
+      "description": "Automate Graphite stacked-PR workflow with commands for creating diffs and submitting PRs (includes gt-create, gt-submit, gt-create-submit aliases)",
       "keywords": ["graphite", "git", "stacked-diffs", "pull-requests", "workflow"]
-    },
-    {
-      "name": "gt",
-      "source": "./plugins/gt",
-      "version": "1.0.0",
-      "description": "Short aliases for Graphite workflow commands (/gt:create, /gt:submit, /gt:create-submit)",
-      "keywords": ["graphite", "gt", "alias", "git", "stacked-diffs"]
     },
     {
       "name": "playwright",
