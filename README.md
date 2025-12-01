@@ -4,30 +4,47 @@ Official Claude Code plugins for DataFlight workflows.
 
 ## Plugins
 
-### gt-workflow
+### graphite
 
-Automate Graphite (gt) stacked-PR workflow with one-shot commands for creating diffs and submitting PRs.
+Automate Graphite stacked-PR workflow with one-shot commands for creating diffs and submitting PRs.
 
 **Commands:**
-- `/gt-create` - Create a stacked diff from current changes
-- `/gt-submit` - Submit current branch as PR
-- `/gt-create-submit` - Create and submit in one step
-- Aliases: `/graphite-create`, `/graphite-submit`, `/graphite-create-submit`
+- `/graphite:create` - Create a stacked diff from current changes
+- `/graphite:submit` - Submit current branch as PR
+- `/graphite:create-submit` - Create and submit in one step
+- Aliases: `/graphite:gt-create`, `/graphite:gt-submit`, `/graphite:gt-create-submit`
 
 **Features:**
 - AI-generated commit messages following your repo's style
 - Automatic staging with `--all` flag
-- CLI-first approach with MCP fallback
-- Optional configuration via `.claude/gt-workflow.local.md`
+- CLI-first approach
 
-[View full documentation →](./plugins/gt-workflow/README.md)
+[View full documentation →](./plugins/graphite/README.md)
+
+### playwright
+
+Browser automation with Playwright.
+
+**Commands:**
+- `/playwright:screenshot` - Take a screenshot of a webpage
+- `/playwright:check-links` - Check for broken links
+- `/playwright:test-page` - Basic page health check
+- `/playwright:test-responsive` - Test across viewports
+
+**Features:**
+- Auto-detects running dev servers
+- Scripts saved to `/tmp` for inspection
+- Visible browser for debugging
+
+[View full documentation →](./plugins/playwright/README.md)
 
 ## Installation
 
 ### From Marketplace (Coming Soon)
 
 ```bash
-claude plugin install gt-workflow@dataflight-claude-plugins
+claude plugin install graphite@dataflight-claude-plugins
+claude plugin install playwright@dataflight-claude-plugins
 ```
 
 ### From GitHub

@@ -1,6 +1,6 @@
 ---
 description: Take a screenshot of a webpage
-allowed-tools: Bash(node:*), Bash(npm:*)
+allowed-tools: Bash(node:*), Write
 ---
 
 # Screenshot Command
@@ -8,8 +8,6 @@ allowed-tools: Bash(node:*), Bash(npm:*)
 Take a full-page screenshot of a webpage. Automatically detects running dev servers or uses a provided URL.
 
 ## Execution Steps
-
-Execute these steps in order. Stop and report errors if any step fails.
 
 ### Step 1: Determine Target URL
 
@@ -26,23 +24,21 @@ cd ${CLAUDE_PLUGIN_ROOT} && node -e "require('./lib/helpers').detectDevServers()
 - **Multiple servers found**: Ask user which one to screenshot
 - **No servers found**: Ask user for URL
 
-### Step 2: Generate Screenshot Script
+### Step 2: Write Screenshot Script
 
-Write a script to `/tmp/playwright-screenshot.js`:
+Write a script to `/tmp/playwright-screenshot.js` with the target URL:
 
 ```javascript
 const { chromium } = require('playwright');
 
-const TARGET_URL = '<detected-or-provided-url>';
-
 (async () => {
-  console.log('Taking screenshot of:', TARGET_URL);
+  console.log('Taking screenshot of: TARGET_URL');
 
   const browser = await chromium.launch({ headless: false, slowMo: 50 });
   const page = await browser.newPage();
 
   try {
-    await page.goto(TARGET_URL, { waitUntil: 'networkidle', timeout: 30000 });
+    await page.goto('TARGET_URL', { waitUntil: 'networkidle', timeout: 30000 });
     console.log('Page loaded:', await page.title());
 
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -59,49 +55,25 @@ const TARGET_URL = '<detected-or-provided-url>';
 })();
 ```
 
-Replace `<detected-or-provided-url>` with the actual URL.
+Replace `TARGET_URL` with the actual URL.
 
-### Step 3: Execute Screenshot Script
+### Step 3: Execute Script
 
 ```bash
 cd ${CLAUDE_PLUGIN_ROOT} && node run.js /tmp/playwright-screenshot.js
 ```
 
-### Step 4: Report Result
+### Step 4: Display Screenshot
 
-After successful execution:
-- Report the URL that was captured
-- Report the exact path where screenshot was saved
-- Mention the screenshot is in PNG format with full page capture
+After successful execution, use the Read tool to display the screenshot image to the user.
 
-Example output:
-```
-Screenshot captured for: http://localhost:3847
+### Step 5: Report Result
 
-Saved to: /tmp/screenshot-2024-01-15T10-30-45-123Z.png
-
-The screenshot includes the full scrollable page content.
-```
+Tell the user:
+- Which URL was captured
+- The path to the saved screenshot
 
 ## Error Handling
 
-If the script fails:
-- Show the error message
-- Common issues:
-  - URL not reachable: Check if the server is running
-  - Timeout: Try increasing timeout or check network
-  - Playwright not installed: Run `npm run setup` in plugin directory
-
-## Options
-
-The user can provide optional parameters:
-- **URL**: Direct URL to screenshot (overrides server detection)
-- **fullPage**: Whether to capture full scrollable page (default: true)
-- **viewport**: Custom viewport size
-
-## Notes
-
-- Screenshots are saved to `/tmp` for easy access and automatic cleanup
-- Browser opens visibly so user can see the capture process
-- Uses `networkidle` wait to ensure page is fully loaded
-- Full page screenshots may be large for long pages
+- If navigation fails, check if the server is running
+- If Playwright is not installed, run `npm run setup` in the plugin directory
