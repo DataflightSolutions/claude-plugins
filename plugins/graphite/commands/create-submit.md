@@ -5,7 +5,7 @@ allowed-tools: Bash(gt:*), Bash(git:*)
 
 # Create Diff and Submit PR
 
-Create a stacked diff from current changes and immediately submit it as a pull request. This combines `/gt-create` and `/gt-submit` into a single workflow.
+Create a stacked diff from current changes and immediately submit it as a pull request. This combines `/graphite:create` and `/graphite:submit` into a single workflow.
 
 ## When to Use This Command
 
@@ -14,7 +14,7 @@ Use this command when:
 - You want to create and submit a PR in one step
 - The change represents a single logical unit of work
 
-For iterative work where you want to create multiple diffs before submitting, use `/gt-create` instead.
+For iterative work where you want to create multiple diffs before submitting, use `/graphite:create` instead.
 
 ## Stacked Diff Philosophy
 
@@ -130,11 +130,11 @@ PR URL: https://github.com/user/repo/pull/123
 **If gt submit fails:**
 - The diff was created but not submitted
 - Show the error
-- User can retry with `/gt-submit`
+- User can retry with `/graphite:submit`
 - Common causes: auth issues, network problems
 
 ## Notes
 
 - This is a convenience command combining two operations
-- If you need to review the diff before submitting, use `/gt-create` then `/gt-submit` separately
+- If you need to review the diff before submitting, use `/graphite:create` then `/graphite:submit` separately
 - The PR title and description are derived from the commit message

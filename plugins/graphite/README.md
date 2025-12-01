@@ -1,4 +1,4 @@
-# gt-workflow
+# graphite
 
 Automate Graphite stacked diff workflows with slash commands for creating diffs and submitting PRs.
 
@@ -16,11 +16,11 @@ The commands in this plugin follow stacked diff best practices:
 
 ## Commands
 
-### `/gt-create`
+### `/graphite:create`
 
 Create a new stacked diff from current changes without submitting a PR.
 
-**Alias**: `/graphite-create`
+**Alias**: `/gt:create`
 
 **What it does**:
 1. Validates git repository and gt CLI availability
@@ -30,11 +30,11 @@ Create a new stacked diff from current changes without submitting a PR.
 
 **Use when**: You want to create a diff but review it before opening a PR, or when building a stack of multiple diffs.
 
-### `/gt-submit`
+### `/graphite:submit`
 
 Submit the current branch as a pull request.
 
-**Alias**: `/graphite-submit`
+**Alias**: `/gt:submit`
 
 **What it does**:
 1. Validates environment
@@ -42,15 +42,15 @@ Submit the current branch as a pull request.
 
 **Use when**: You have a diff ready and want to open or update a PR.
 
-### `/gt-create-submit`
+### `/graphite:create-submit`
 
 Create a diff and submit it as a PR in one step.
 
-**Alias**: `/graphite-create-submit`
+**Alias**: `/gt:create-submit`
 
 **What it does**:
-1. Everything from `/gt-create`
-2. Immediately runs `/gt-submit`
+1. Everything from `/graphite:create`
+2. Immediately runs `/graphite:submit`
 
 **Use when**: You have a complete, self-contained change ready for review.
 
@@ -89,35 +89,35 @@ refactor(utils): extract date formatting into separate module
 
 ```
 # Make first change
-/gt-create          # Creates diff 1
+/graphite:create          # Creates diff 1
 
 # Make second change on top
-/gt-create          # Creates diff 2, stacked on diff 1
+/graphite:create          # Creates diff 2, stacked on diff 1
 
 # Make third change
-/gt-create          # Creates diff 3
+/graphite:create          # Creates diff 3
 
 # Submit all when ready
-gt submit --stack   # (run manually to submit entire stack)
+gt submit --stack         # (run manually to submit entire stack)
 ```
 
 ### Quick single-diff workflow
 
 ```
 # Make your changes
-/gt-create-submit   # Creates diff and opens PR immediately
+/graphite:create-submit   # Creates diff and opens PR immediately
 ```
 
 ### Review before submitting
 
 ```
 # Make changes
-/gt-create          # Creates the diff
+/graphite:create          # Creates the diff
 
 # Review in GitHub or locally
 # Make adjustments if needed
 
-/gt-submit          # Submit when satisfied
+/graphite:submit          # Submit when satisfied
 ```
 
 ## Troubleshooting
@@ -143,8 +143,8 @@ The branch was created outside of gt. Use `gt create` to create Graphite-tracked
 
 ## Development
 
-- **Version**: 0.1.0
-- **Commands**: 6 (3 primary + 3 aliases)
+- **Version**: 1.0.0
+- **Commands**: 3 primary (+ 3 aliases via gt plugin)
 - **Dependencies**: Graphite CLI
 
 ## License
