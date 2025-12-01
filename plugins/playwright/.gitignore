@@ -1,0 +1,5 @@
+node_modules/
+.temp-execution-*.js
+*.log
+.DS_Store
+Thumbs.db

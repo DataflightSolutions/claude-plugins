@@ -1,0 +1,18 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "Browser automation with Playwright. Auto-invoked skill for custom automation plus quick commands for screenshots, link checking, and responsive testing.",
+  "author": {
+    "name": "DataFlight",
+    "url": "https://github.com/DataflightSolutions"
+  },
+  "keywords": [
+    "playwright",
+    "browser",
+    "testing",
+    "automation",
+    "e2e",
+    "screenshots",
+    "web-testing"
+  ]
+}

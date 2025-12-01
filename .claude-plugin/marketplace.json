@@ -22,6 +22,13 @@
       "version": "0.1.0",
       "description": "Automate Graphite (gt) stacked-PR workflow with one-shot commands",
       "keywords": ["graphite", "git", "stacked-diffs", "pull-requests", "workflow"]
+    },
+    {
+      "name": "playwright",
+      "source": "./plugins/playwright",
+      "version": "1.0.0",
+      "description": "Browser automation with Playwright. Auto-invoked skill for custom automation plus quick commands for screenshots, link checking, and responsive testing.",
+      "keywords": ["playwright", "browser", "testing", "automation", "e2e", "screenshots", "web-testing"]
     }
   ]
 }
